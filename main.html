@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel=" stylesheet " href ="main_css.css">
+</head>
+<body>
+    <form id="form">
+        <div id=" header " class =" container " >
+            <div class="container2">
+                <h1>JOKES</h1>
+                <label for="jokes_" id="lab"><b>Jokes Category</b></label><br>
+                <select id="catagory" class="input" name="joke_catagory">
+                  <option value="Dark">Dark</option>
+                  <option value="Misc">Misc</option>
+                  <option value="Programming">Programming</option>
+                  <option value="Pun">Pun</option>
+                </select>
+                <br><br>
+                <label for="type_" id="lab"><b>Jokes Type</b></label><br>
+                <select id="type" class="input" name="joke_Type">
+                  <option value="Single">Single</option>
+                  <option value="twopart">Twopart</option>
+                </select>
+                <br><br>
+                <button type="submit" id="b1"><a href="index.html"></a>Generate Joke 😀</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        let form=document.getElementById("form")
+        let joke_catagory=document.getElementById("catagory")
+        let joke_Type=document.getElementById("type")
+        form.addEventListener('submit',(e)=>
+        {
+            e.preventDefault()
+            let type=joke_Type.value
+            let catagory=joke_catagory.value
+
+            localStorage.setItem("Type",type)
+            localStorage.setItem("Catagory",catagory)
+
+            window.location.href="index.html"
+        })
+    </script>
+</body>
+</html>

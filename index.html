@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel=" stylesheet " href ="index_css.css">
+</head>
+<body>
+        <div class="container">
+            <div class="container2">
+                <h1>JOKE<b></h1>
+            </div>
+            <div class="container1">
+                <ul>
+                </ul>
+            </div>
+            <div class="container2">
+                <button id="reset"><a href=main.html>Prev</a></button>
+                <button onclick=window.location.reload() id="reset">New Joke</button>
+            </div>
+        </div>
+        <script>
+            let joke_Type=localStorage.getItem("Type")
+            let joke_catagory=localStorage.getItem("Catagory")
+            function single_joke(result)
+            {
+                return `<p>Category: ${result.category}</p><p> Type: ${result.type}</p><p>Joke: ${result.joke}</li>`
+            }
+            function twopart_joke(result)
+            {
+                return `<p>Category: ${result.category}</p><p> Type: ${result.type}</p><p>Setup: ${result.setup}</p><p>Delivery: ${result.delivery}</p>`
+            }
+            function catagory(joke_Type,a)
+            {
+                fetch(a)
+                .then((result)=>
+                {
+                    return result.json()
+                }).then( result=>
+                {
+                    let data
+                    if(joke_Type==='Single')
+                    {
+                        data=single_joke(result)
+                    }
+                    else
+                    {
+                        data=twopart_joke(result)
+                    }
+                    document.querySelector(`ul`).insertAdjacentHTML("beforeend",data)
+                })
+            }
+            if(joke_Type==='Single')
+            {
+                let a
+                if(joke_catagory==='Dark')
+                {
+                    a="https://v2.jokeapi.dev/joke/Dark?type=single&idRange=0-318"
+                }
+                else if(joke_catagory==='Misc')
+                {
+                    a="https://v2.jokeapi.dev/joke/Misc?type=single&idRange=0-318"
+                }
+                else if(joke_catagory==='Programming')
+                {
+                    a="https://v2.jokeapi.dev/joke/Programming?type=single&idRange=0-318"
+                }
+                else if(joke_catagory==='Pun')
+                {
+                    a="https://v2.jokeapi.dev/joke/Pun?type=single&idRange=0-318"
+                }
+                catagory(joke_Type,a)
+            }
+            else
+            {
+                let a
+                if(joke_catagory==='Dark')
+                {
+                    a="https://v2.jokeapi.dev/joke/Dark?type=twopart&idRange=0-318"
+                }
+                else if(joke_catagory==='Misc')
+                {
+                    a="https://v2.jokeapi.dev/joke/Misc?type=twopart&idRange=0-318"
+                }
+                else if(joke_catagory==='Programming')
+                {
+                    a="https://v2.jokeapi.dev/joke/Programming?type=twopart&idRange=0-318"
+                }
+                else if(joke_catagory==='Pun')
+                {
+                    a="https://v2.jokeapi.dev/joke/Pun?type=twopart&idRange=0-318"
+                }
+                else if(joke_catagory==='Spooky')
+                {
+                    a="https://v2.jokeapi.dev/joke/Spooky?type=twopart&idRange=0-318"
+                }
+                else
+                {
+                    a="https://v2.jokeapi.dev/joke/Christmas?type=twopart&idRange=0-318"
+                }
+                catagory(joke_Type,a)
+            }
+        </script>
+</body>
+</html>
