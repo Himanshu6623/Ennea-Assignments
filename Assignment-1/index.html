@@ -28,25 +28,20 @@
             {
                 return `<p>Category: ${result.category}</p><p> Type: ${result.type}</p><p>Setup: ${result.setup}</p><p>Delivery: ${result.delivery}</p>`
             }
-            function catagory(joke_Type,a)
+            async function catagory(joke_Type,a)
             {
-                fetch(a)
-                .then((result)=>
+                let response=await fetch(a)
+                let result= await response.json()
+                let data
+                if(joke_Type==='Single')
                 {
-                    return result.json()
-                }).then( result=>
+                    data=single_joke(result)
+                }
+                else
                 {
-                    let data
-                    if(joke_Type==='Single')
-                    {
-                        data=single_joke(result)
-                    }
-                    else
-                    {
-                        data=twopart_joke(result)
-                    }
-                    document.querySelector(`ul`).insertAdjacentHTML("beforeend",data)
-                })
+                    data=twopart_joke(result)
+                }
+                document.querySelector(`ul`).insertAdjacentHTML("beforeend",data)
             }
             if(joke_Type==='Single')
             {
