@@ -45,44 +45,12 @@
             }
             if(joke_Type==='Single')
             {
-                let a
-                if(joke_catagory==='Dark')
-                {
-                    a="https://v2.jokeapi.dev/joke/Dark?type=single&idRange=0-318"
-                }
-                else if(joke_catagory==='Misc')
-                {
-                    a="https://v2.jokeapi.dev/joke/Misc?type=single&idRange=0-318"
-                }
-                else if(joke_catagory==='Programming')
-                {
-                    a="https://v2.jokeapi.dev/joke/Programming?type=single&idRange=0-318"
-                }
-                else if(joke_catagory==='Pun')
-                {
-                    a="https://v2.jokeapi.dev/joke/Pun?type=single&idRange=0-318"
-                }
+                let a="https://v2.jokeapi.dev/joke/"+String(joke_catagory)+"?type=single&idRange=0-318"
                 catagory(joke_Type,a)
             }
             else
             {
-                let a
-                if(joke_catagory==='Dark')
-                {
-                    a="https://v2.jokeapi.dev/joke/Dark?type=twopart&idRange=0-318"
-                }
-                else if(joke_catagory==='Misc')
-                {
-                    a="https://v2.jokeapi.dev/joke/Misc?type=twopart&idRange=0-318"
-                }
-                else if(joke_catagory==='Programming')
-                {
-                    a="https://v2.jokeapi.dev/joke/Programming?type=twopart&idRange=0-318"
-                }
-                else if(joke_catagory==='Pun')
-                {
-                    a="https://v2.jokeapi.dev/joke/Pun?type=twopart&idRange=0-318"
-                }
+                let a="https://v2.jokeapi.dev/joke/"+String(joke_catagory)+"?type=twopart&idRange=0-318"
                 catagory(joke_Type,a)
             }
         </script>
