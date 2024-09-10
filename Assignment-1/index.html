@@ -6,14 +6,17 @@
 <body>
         <div class="container">
             <div class="container2">
-                <h1>JOKE<b></h1>
+                <h1><i>JOKE</i><b></h1>
+                <img src="images.jpeg" style="width: 220px;"><br>
             </div>
             <div class="container1">
-                <ul>
+                
+                <ul class="content">
                 </ul>
             </div>
             <div class="container2">
-                <button id="reset"><a href=main.html>Prev</a></button>
+                <br><br><br>
+                <a href=main.html><button id="reset"><- Back</button></a>
                 <button onclick=window.location.reload() id="reset">New Joke</button>
             </div>
         </div>
@@ -22,11 +25,11 @@
             let joke_catagory=localStorage.getItem("Catagory")
             function single_joke(result)
             {
-                return `<p>Category: ${result.category}</p><p> Type: ${result.type}</p><p>Joke: ${result.joke}</li>`
+                return `<p><i>Category: ${result.category}</p><p> Type: ${result.type}</p><p>Joke: ${result.joke}</i></p>`
             }
             function twopart_joke(result)
             {
-                return `<p>Category: ${result.category}</p><p> Type: ${result.type}</p><p>Setup: ${result.setup}</p><p>Delivery: ${result.delivery}</p>`
+                return `<p><i>Category: ${result.category}</p><p> Type: ${result.type}</p><p>Setup: ${result.setup}</p><p>Delivery: ${result.delivery}</i></p>`
             }
             async function catagory(joke_Type,a)
             {
