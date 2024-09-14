@@ -74,7 +74,7 @@ class Main
         {
             while(true)
             {
-                System.out.print("Enter the card you want to flip: ");
+                System.out.print("Choose the card to flip between(1-12): ");
                 int choose=sc.nextInt();
                 if(flipped_cards.contains(choose-1))
                 {
