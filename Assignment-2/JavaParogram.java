@@ -1,6 +1,6 @@
 import java.util.*;
 import java.util.Collections;
-class java_application
+class Main
 {
     public static void Quiz_Game()
     {
@@ -39,9 +39,9 @@ class java_application
         }
         System.out.println("You have given "+correct+" answers out of "+map.size());
     }
-    public static void deck(ArrayList<Integer> flipped_cards,int[] arr,HashMap<Integer,Character> map)
+    public static void deck(ArrayList<Integer> flipped_cards,HashMap<Integer,Character> map)
     {
-        for (int i=0; i<arr.length; i++) 
+        for (int i=0; i<map.size(); i++) 
         {
             if(flipped_cards.contains(i))
             {
@@ -49,7 +49,7 @@ class java_application
             }
             else
             {
-                System.out.print(arr[i] + " ");
+                System.out.print(0 + " ");
             }
             if ((i + 1) % 4 == 0) {
                 System.out.println();
@@ -63,7 +63,6 @@ class java_application
         ArrayList<Character> card_deck=new ArrayList<>(Arrays.asList('A','A','B','B','C','C','D','D','E','E','F','F'));
         Collections.shuffle(card_deck);
         HashMap<Integer,Character> map=new HashMap<>();
-        int[] arr=new int[12];
         for(int i=0;i<card_deck.size();i++)
         {
             map.put(i,card_deck.get(i));
@@ -99,7 +98,7 @@ class java_application
                         }
                         else
                         {
-                            deck(flipped_cards,arr,map);
+                            deck(flipped_cards,map);
                             flipped_cards.remove(flipped_cards.size()-1);
                             flipped_cards.remove(flipped_cards.size()-1);
                             stack.pop();
@@ -107,7 +106,7 @@ class java_application
                         }
                         chances++;
                     }
-                    deck(flipped_cards,arr,map);
+                    deck(flipped_cards,map);
                     break;
                 }
             }
@@ -131,7 +130,7 @@ class java_application
                 Card_Matching_Game();
                 break;
             default:
-                System.out.println("Choose a valid choice");
+                System.out.println("Choose a valid choose");
                 break;
         }
     }
