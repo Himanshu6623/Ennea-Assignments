@@ -2,8 +2,8 @@ import React,{useState} from 'react'
 import LiveWeatherCard from './LiveWeatherCard'
 export default function Live_Weather(props)
 {
-    const[place,setPlace]=useState("{Place_name}")
-    
+    const[place,setPlace]=useState("")
+    const[loading,setloading]=useState(false)
     const Place_Name=(event)=>
     {
         setPlace(event.target.value)
@@ -11,6 +11,7 @@ export default function Live_Weather(props)
     const[weather,setweather]=useState({'main':{'temp':274,'humidity':0},'wind':{'speed':0},'clouds':{'all':0}})
     async function Weather(){
     try {
+        setloading(true)
         const url = 'https://weather-api138.p.rapidapi.com/weather?city_name='+String(place);
         const options = {
         	method: 'GET',
@@ -36,15 +37,21 @@ export default function Live_Weather(props)
         	console.log(error);
             props.showAlert(" : Network issue",'warning')
         }
+        finally{
+            setloading(false)
+        }
     }
     return(
         <>
             <br/>
             <div className="d-flex">
                 <input className="form-control me-2" style={{backgroundColor: props.mode==='dark'?'black':'white', color: props.mode==='dark'?'white':'black'}} value={place} onChange={Place_Name}  placeholder="Enter the Place name forExample-Delhi,Hyderabad" aria-label="Search" />
-                <button  className="btn btn-success" onClick={Weather} >Search</button>
+                <button  className="btn btn-success" onClick={Weather} >{loading ? "Loading..." : "Search"}</button>
             </div><br/><br/>
-            <LiveWeatherCard place={place} weather={weather} mode={props.mode}/>
+            {loading ? 
+            (<h1 style={{color: props.mode==='dark'?'white':'black'}}>Loading weather report...</h1>):
+            (<LiveWeatherCard place={place} weather={weather} mode={props.mode}/>)
+            }
             
         </>
     );

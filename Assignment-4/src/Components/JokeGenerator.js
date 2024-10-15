@@ -7,10 +7,12 @@ export default function Joke_Generator(props)
     const[api,setApi]=useState("https://v2.jokeapi.dev/joke/Dark?type=single&idRange=0-318")
     const[type,setType]=useState("single")
     const[catagory,setCatagory]=useState("Dark")
+    const[loading,setloading]=useState(false)
     async function Random_joke()
     {
         try
         {
+          setloading(true)
         setApi("https://v2.jokeapi.dev/joke/"+String(catagory)+"?type="+String(type)+"&idRange=0-318")
         const response= await fetch(api)
         const result=await response.json()
@@ -32,6 +34,10 @@ export default function Joke_Generator(props)
         catch (error) {
         	console.log(error);
             props.showAlert(" : Network issue",'warning')
+        }
+        finally
+        {
+          setloading(false)
         }
     }
     const joke_type=(event)=>
@@ -61,7 +67,7 @@ export default function Joke_Generator(props)
             </select>
             <br /><br/>
             <div className="d-grid gap-2">
-                <button style={{backgroundColor: props.mode==='dark'?'black':'white',color: props.mode==='dark'?'white':'black'}} className="btn btn-outline-info" onClick={Random_joke} >Generate joke</button>
+                <button style={{backgroundColor: props.mode==='dark'?'black':'white',color: props.mode==='dark'?'white':'black'}} className="btn btn-outline-info" onClick={Random_joke} >{loading ? "Loading..." : "Generate joke"}</button>
             </div>
             <br/><br/><br/>
             <div className="card mb-3" >
@@ -71,9 +77,15 @@ export default function Joke_Generator(props)
                 </div>
                 <div className="col-md-8" style={{backgroundColor: props.mode==='dark'?'black':'white',color: props.mode==='dark'?'white':'black'}}>
                   <div className="card-body" >
-                    <h5 className="card-title" style={{fontSize:"30px"}}>JOKE</h5>
-                    <p style={{fontSize:"18px"}}>{joke}</p>
-                    <p style={{fontSize:"18px"}}>{delivery}</p>
+                    {loading ?(
+                      <h5 className="card-title" style={{fontSize:"30px"}}>Loading...</h5>
+                    ):(
+                      <>
+                        <h5 className="card-title" style={{fontSize:"30px"}}>JOKE</h5>
+                        <p style={{fontSize:"18px"}}>{joke}</p>
+                        <p style={{fontSize:"18px"}}>{delivery}</p>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
