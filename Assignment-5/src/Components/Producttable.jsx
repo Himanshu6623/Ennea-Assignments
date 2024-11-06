@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Table } from "antd";
 import { useDispatch,useSelector} from "react-redux";
 import { New,Add } from "../Redux/CounterSlice/Updatedvalue";
@@ -7,47 +7,53 @@ import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 export default function Testing() {
-    const [prod, setProd] = useState([]);
+
     const [product,setProduct]=useState("")
-    const [search,setsearch]=useState("")
+    const [search,setSearch]=useState("")
     const dispatch=useDispatch()
     const Find_item=(event)=>{
       setProduct(event.target.value)
     }
-    const value=useSelector((state)=>state.update)
+    const productsList=useSelector((state)=>state.update.products)
     
     const handleSearch = (event) => {
       event.preventDefault(); 
-      setsearch(product)
+      setSearch(product)
     };
     const { data, error, isLoading } = useQuery('fetchData', () =>
-      axios.get('https://dummyjson.com/products').then(res => res.data.products)
+      axios.get('https://dummyjson.com/products').then(res => res.data.products),{onSuccess:(data)=>{
+        if (data && productsList.length===0) {
+          dispatch(New(data))
+        }
+      }}
     );
+    
+    const filteredProducts = useMemo(()=>{
+      if (productsList.length === 0) {
+        return [];
+    }
+      return productsList.filter((prod) =>
+        search=== "All products" || search === "" ? true : (prod.id === parseInt(search)|| (prod.category && prod.category.toLowerCase() === search.toLowerCase()) || (prod.brand && prod.brand.toLowerCase() === search.toLowerCase())
+      ||(prod.title && prod.title.toLowerCase() === search.toLowerCase()))
+    )},[productsList,search]);
+    
     useEffect(() => {
-      if (data && value.products.length===0) {
-        dispatch(New(data))
-        setProd(data);
-      }
-      else{
-        setProd(value.products)
-      }
-    }, [data]);
-  
+      const timeoutId = setTimeout(() => {
+          setSearch(product);
+      }, 300);
+
+      return () => clearTimeout(timeoutId);
+    }, [product]);
+
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>An error occurred</p>;
 
-    const filteredProducts = prod.filter((prod) =>
-        search=== "All products" || search === "" ? true : (prod.id === parseInt(search)|| (prod.category && prod.category.toLowerCase() === search.toLowerCase()) || (prod.brand && prod.brand.toLowerCase() === search.toLowerCase())
-      ||(prod.title && prod.title.toLowerCase() === search.toLowerCase()))
-    );
-
-
-  const columns = prod.length > 0
-    ? Object.keys(prod[0])
-        .filter((key) => typeof prod[0][key] !== 'object')
+  const columns = productsList.length > 0
+    ? Object.keys(productsList[0])
+        .filter((key) => typeof productsList[0][key] !== 'object')
         .filter((key)=>key!=="thumbnail" && key!=="sku" && key!=="weight" && key!=="returnPolicy" && key!=="minimumOrderQuantity")
         .map((key) => ({
-          title: key.charAt(0).toUpperCase() + key.slice(1), // Capitalize column titles
+          title: key.charAt(0).toUpperCase() + key.slice(1),
           dataIndex: key,
           key: key,
         }))
@@ -82,7 +88,6 @@ export default function Testing() {
             <h1>PRODUCTS TABLE</h1>
             <form  className="d-flex" role="search" onSubmit={handleSearch} style={{ position: "absolute", right: "0", top: "100%" }}>
               <input className="form-control me-2" type="search" value={product} onChange={Find_item} placeholder="Search" aria-label="Search" />
-              <button className="btn btn-outline-success" type="submit">Search</button>
             </form> 
         </div>
         <div className="container m-5">
@@ -90,4 +95,4 @@ export default function Testing() {
         </div>
     </>
   );
-
+}

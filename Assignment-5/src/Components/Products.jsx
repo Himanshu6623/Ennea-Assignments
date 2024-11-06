@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useMemo} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Change,Reviews} from "../Redux/CounterSlice/Review";
 import { Link } from "react-router-dom";
@@ -10,35 +9,43 @@ export default function Products() {
     const [prod, setProd] = useState([]);
     const dispatch=useDispatch()
     const [product,setProduct]=useState("")
-    const [search,setsearch]=useState("")
+    const [search,setSearch]=useState("")
     const Find_item=(event)=>{
       setProduct(event.target.value)
     }
-    const value=useSelector((state)=>state.update)
+    const productsList=useSelector((state)=>state.update.products)
     const handleSearch = (event) => {
       event.preventDefault(); 
-      setsearch(product)
+      setSearch(product)
     };
     const { data, error, isLoading } = useQuery('fetchData', () =>
-      axios.get('https://dummyjson.com/products').then(res => res.data.products)
-    );
+        axios.get('https://dummyjson.com/products').then(res => res.data.products),{onSuccess:(data)=>{
+          if (data && productsList.length===0) {
+            dispatch(New(data))
+          }
+        }}
+      );
+      
+    const filteredProducts = useMemo(()=>{
+      if (productsList.length === 0) {
+        return [];
+    }
+      return productsList.filter((prod) =>
+        search=== "All products" || search === "" ? true : (prod.id === parseInt(search)|| (prod.category && prod.category.toLowerCase() === search.toLowerCase()) || (prod.brand && prod.brand.toLowerCase() === search.toLowerCase())
+      ||(prod.title && prod.title.toLowerCase() === search.toLowerCase()))
+    )},[productsList,search]);
+    
     useEffect(() => {
-        if (data && value.products.length===0) {
-          dispatch(New(data))
-          setProd(data);
-        }
-        else{
-          setProd(value.products)
-        }
-      }, [data]);
+        const timeoutId = setTimeout(() => {
+            setSearch(product);
+        }, 300);
+  
+        return () => clearTimeout(timeoutId);
+      }, [product]);
     
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>An error occurred</p>;
 
-    const filteredProducts = prod.filter((prod) =>
-        search=== "All products" || search === "" ? true : (prod.id === parseInt(search)|| (prod.category && prod.category.toLowerCase() === search.toLowerCase()) || (prod.brand && prod.brand.toLowerCase() === search.toLowerCase())
-        ||(prod.title && prod.title.toLowerCase() === search.toLowerCase()))
-    );
     const handleReviewClick = (productId,productReview) => {
         dispatch(Change(productId))
         dispatch(Reviews(productReview))
