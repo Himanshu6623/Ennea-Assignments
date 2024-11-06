@@ -3,6 +3,8 @@ import { Table } from "antd";
 import { useDispatch} from "react-redux";
 import { Change,Reviews} from "../Redux/CounterSlice/Review";
 import { Link } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 export default function Testing() {
     const [prod, setProd] = useState([]);
     const [product,setProduct]=useState("")
@@ -15,17 +17,21 @@ export default function Testing() {
       event.preventDefault(); 
       setsearch(product)
     };
-    useEffect(()=>{
-        async function API(){
-            const data=await fetch('https://dummyjson.com/products')
-            const json=await data.json()
-            setProd(json.products)
-        }
-        API()
-    },[])
+    const { data, error, isLoading } = useQuery('fetchData', () =>
+      axios.get('https://dummyjson.com/products').then(res => res.data.products)
+    );
+    React.useEffect(() => {
+      if (data) {
+        setProd(data);
+      }
+    }, [data]);
+  
+    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p>An error occurred</p>;
 
     const filteredProducts = prod.filter((prod) =>
-        search=== "All products" || search === "" ? true : (prod.id === parseInt(search)|| (prod.category && prod.category.toLowerCase() === search.toLowerCase()) || (prod.brand && prod.brand.toLowerCase() === search.toLowerCase()))
+        search=== "All products" || search === "" ? true : (prod.id === parseInt(search)|| (prod.category && prod.category.toLowerCase() === search.toLowerCase()) || (prod.brand && prod.brand.toLowerCase() === search.toLowerCase())
+      ||(prod.title && prod.title.toLowerCase() === search.toLowerCase()))
     );
 
 
