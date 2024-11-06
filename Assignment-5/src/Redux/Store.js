@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import NewProduct from "./CounterSlice/Newproduct"
+import Newprod from "./CounterSlice/Newprod"
 import Review from "./CounterSlice/Review"
+import Updatedvalue from "./CounterSlice/Updatedvalue";
 export const store=configureStore({
     reducer :{
-        new :NewProduct,
-        review : Review
+        new : Newprod,
+        review : Review,
+        update : Updatedvalue,
     }
 })

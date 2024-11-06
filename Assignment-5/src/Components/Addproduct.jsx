@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Form, Button, Input, notification , DatePicker, Space, Typography } from 'antd';
-import { useDispatch } from "react-redux";
+import { useDispatch} from "react-redux";
 import {  useNavigate } from "react-router-dom";
 import moment from 'moment'
-import { NewTitle, NewDescription, NewCategory, NewPrice, 
+import { NewTitle,NewDescription, NewCategory, NewPrice, 
     NewDiscountPercentage, NewRating, NewStock, 
     NewWarrantyInformation, NewShippingInformation, 
-    NewAvailabilityStatus, NewImages ,NewUserId} from "../Redux/CounterSlice/Newproduct";
-
+    NewAvailabilityStatus, NewImages ,NewUserId,
+    NewBrand} from "../Redux/CounterSlice/Newprod";
 export default function AddProduct() {
     const dispatch = useDispatch();
     const Navigate=useNavigate()
@@ -33,6 +33,7 @@ export default function AddProduct() {
         dispatch(NewUserId(values.UserId));  
         dispatch(NewCategory(values.category)); 
         dispatch(NewPrice(values.price)); 
+        dispatch(NewBrand(values.brand)); 
         dispatch(NewDescription(values.description)); 
         dispatch(NewDiscountPercentage(values.discountPercentage)); 
         dispatch(NewRating(values.rating)); 
@@ -63,11 +64,11 @@ export default function AddProduct() {
                     onFinish={handleSearch} 
                     style={{ width: '400px', padding: '20px', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}
                 >
-                    <Form.Item name="title" label="Title" rules={[{ required: true, message: 'Please enter the product title' }]}>
-                        <Input placeholder="Enter the product title" />
-                    </Form.Item>
                     <Form.Item name="UserId" label="User ID" rules={[{ required: true, message: 'Please enter the product title' }]}>
                         <Input placeholder="Enter the UserID" type="number"/>
+                    </Form.Item>
+                    <Form.Item name="title" label="Title" rules={[{ required: true, message: 'Please enter the product title' }]}>
+                        <Input placeholder="Enter the product title" />
                     </Form.Item>
                     <Form.Item name="description" label="Description" rules={[{ required: true, message: 'Please enter the product description' }]}>
                         <Input placeholder="Enter product description" />
@@ -75,7 +76,10 @@ export default function AddProduct() {
                     <Form.Item name="category" label="Category" rules={[{ required: true, message: 'Please enter the product category' }]}>
                         <Input placeholder="Enter product category" />
                     </Form.Item>
-                    <Form.Item name="price" label="Price" rules={[{ required: true, message: 'Please enter the product price' }]}>
+                    <Form.Item name="price" label="Price" rules={[{ required: true, message: 'Please enter the product Brand' }]}>
+                        <Input placeholder="Enter product Brand" />
+                    </Form.Item>
+                    <Form.Item name="brand" label="Brand" rules={[{ required: true, message: 'Please enter the product price' }]}>
                         <Input placeholder="Enter product price" />
                     </Form.Item>
                     <Form.Item name="discountPercentage" label="Discount Percentage" rules={[{ required: true, message: 'Please enter the discount percentage' }]}>

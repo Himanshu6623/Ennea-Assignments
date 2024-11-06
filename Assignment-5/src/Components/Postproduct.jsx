@@ -1,10 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { notification } from 'antd';
+import { New,Add } from '../Redux/CounterSlice/Updatedvalue';
 export default function Postproduct() {
     const value = useSelector((state) => state.new);
     const navigate=useNavigate()
+    const dispatch=useDispatch()
     const options = {
         method: 'POST',
         headers: {
@@ -17,11 +19,7 @@ export default function Postproduct() {
         try {
             const response = await fetch('https://dummyjson.com/posts/add', options);
             const result = await response.json();
-            console.log('New product added:', result);
-            // const productResponse = await fetch(`https://dummyjson.com/products/${result.id}`);
-            // const value = await productResponse.json()
-            // console.log('Full product details:', value);
-            console.log(value)
+            dispatch(Add(value))
             notification.success({
                 message: 'Product Added Successfully!',
                 description: `The product "${value.title}" has been added to the inventory.`,
