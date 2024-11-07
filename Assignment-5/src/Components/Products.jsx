@@ -75,7 +75,6 @@ export default function Products() {
                 <h1>PRODUCTS CARDS</h1>
                 <form  className="d-flex" role="search" onSubmit={handleSearch} style={{ position: "absolute", right: "0", top: "100%" }}>
                   <input className="form-control me-2" type="search" value={product} onChange={Find_item} placeholder="Search" aria-label="Search" />
-                  <button className="btn btn-outline-success" type="submit">Search</button>
                 </form> 
             </div>
             <div className="container mt-5">
