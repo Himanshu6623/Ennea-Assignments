@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Form, Button, Input, notification , DatePicker, Space, Typography } from 'antd';
+import { Form, Button, Input , DatePicker, Space } from 'antd';
 import { useDispatch} from "react-redux";
 import {  useNavigate } from "react-router-dom";
 import moment from 'moment'
+import styled from "styled-components";
 import { NewTitle,NewDescription, NewCategory, NewPrice, 
     NewDiscountPercentage, NewRating, NewStock, 
     NewWarrantyInformation, NewShippingInformation, 
@@ -49,16 +50,16 @@ export default function AddProduct() {
     };
 
     const [form] = Form.useForm();
-
+    const DIV=styled.div({
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '130vh', 
+        backgroundColor: '#f5f5f5'
+    })
     return (
         <>
-            <div style={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center', 
-                height: '130vh', 
-                backgroundColor: '#f5f5f5'
-            }}>
+            <DIV>
                 <Form 
                     form={form}
                     onFinish={handleSearch} 
@@ -126,7 +127,7 @@ export default function AddProduct() {
                         </Button>
                     </Form.Item>
                 </Form>
-            </div>
+            </DIV>
         </>
     );
 }
