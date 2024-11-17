@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "react-query";
 import { New } from "../Redux/CounterSlice/Updatedvalue";
+import styled from "styled-components";
 export default function Products() {
     const [prod, setProd] = useState([]);
     const dispatch=useDispatch()
@@ -50,11 +51,28 @@ export default function Products() {
         dispatch(Change(productId))
         dispatch(Reviews(productReview))
     };
+
+    const DIV1=styled.div({
+        margin: "10px" 
+    })
+    const IMG=styled.img({
+        height:"200px",
+        width:"200px"
+    })
+    const DIV2=styled.div({
+      position: "relative",
+      marginTop: "20px"
+    })
+    const FORM1=styled.form({
+      position: "absolute",
+      right: "0",
+      top: "100%"
+    })
     const card = filteredProducts.map((product) => (
-        <div className="col-md-3" style={{ margin: "10px" }} key={product.id}>
+        <DIV1 className="col-md-3" key={product.id}>
             <div className="card h-60 w-60">
                 <div className="text-center">
-                    <img src={product.images[0]} style={{height:"200px",width:"200px"}} className="card-img-center" alt={product.title} />
+                    <IMG src={product.images[0]}  className="card-img-center" alt={product.title} />
                 </div>
                 <div className="card-body">
                     <h5 className="card-text">{product.title}</h5>
@@ -66,18 +84,17 @@ export default function Products() {
                     </Link>
                 </div>
             </div>
-        </div>
+        </DIV1>
     ));
 
     return (
         <>
-            <div className="container text-center" style={{ position: "relative", marginTop: "20px" }}>
+            <DIV2 className="container text-center" >
                 <h1>PRODUCTS CARDS</h1>
-                <form  className="d-flex" role="search" onSubmit={handleSearch} style={{ position: "absolute", right: "0", top: "100%" }}>
+                <FORM1  className="d-flex" role="search" onSubmit={handleSearch} >
                   <input className="form-control me-2" type="search" value={product} onChange={Find_item} placeholder="Search" aria-label="Search" />
-                  <button className="btn btn-outline-success" type="submit">Search</button>
-                </form> 
-            </div>
+                </FORM1> 
+            </DIV2>
             <div className="container mt-5">
                 <div className="row">
                     {card}
@@ -86,4 +103,3 @@ export default function Products() {
         </>
     );
 }
-

@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import styled from 'styled-components';
 export default function Navbar() {
+    const NAV=styled.nav({
+        width:"100%"
+    })
     return (
         <>
-            <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{ width: "100%" }}>
+            <NAV className="navbar navbar-expand-lg bg-body-tertiary" >
                 <div className="container-fluid" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Link className="navbar-brand" to="/">E-COMMERCE</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,7 +27,7 @@ export default function Navbar() {
                         </ul>
                     </div>
                 </div>
-            </nav>
+            </NAV>
         </>
     );
 }
