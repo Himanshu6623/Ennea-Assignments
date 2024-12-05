@@ -1,0 +1,10 @@
+package com.Ennea.Hibernate.Repository;
+
+import com.Ennea.Hibernate.Entity.Students;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface StudentRepo extends JpaRepository<Students,String> {
+    Students findByrollno(String rollno);
+}
